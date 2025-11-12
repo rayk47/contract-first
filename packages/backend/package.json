@@ -1,0 +1,25 @@
+{
+  "name": "@contract-first/backend",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "main": "../../dist/packages/backend/index.js",
+  "module": "../../dist/packages/backend/index.js",
+  "types": "../../dist/packages/backend/index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "development": "./src/index.ts",
+      "types": "../../dist/packages/backend/index.d.ts",
+      "import": "../../dist/packages/backend/index.js",
+      "default": "../../dist/packages/backend/index.js"
+    }
+  },
+  "dependencies": {
+    "tslib": "^2.3.0",
+    "@contract-first/api": "*",
+    "aws-lambda": "^1.0.7",
+    "uuid": "3.4.0",
+    "dynamoose": "^4.0.4"
+  }
+}

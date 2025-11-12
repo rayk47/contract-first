@@ -1,0 +1,109 @@
+openapi: 3.1.0
+info:
+  title: Contract First API
+  description: API for demoing contract first development
+  version: 1.0.0
+paths:
+  "/products":
+    get:
+      tags:
+        - Products
+      summary: Get all Products
+      description: Retrieve the Products available on the market.
+      operationId: getProducts
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
+    post:
+      tags:
+        - Products
+      summary: Create a new product
+      description: Create a new product.
+      operationId: postProduct
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateProduct"
+      responses:
+        "201":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+  "/products/{id}":
+    parameters:
+      - name: id
+        in: path
+        description: product id
+        required: true
+        schema:
+          type: string
+          example: bea212-scfd-dvcd-dcvd-dcsdvdvv
+    delete:
+      tags:
+        - Products
+      summary: Delete a product by ID
+      description: Delete a product by ID
+      operationId: deleteProduct
+      responses:
+        "204":
+          description: Successful response
+components:
+  schemas:
+    Product:
+      required:
+        - id
+        - name
+        - startDate
+        - description
+      description: Represents a Product in the marketplace.
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          example: "12345"
+          type: string
+          description: Unique identifier for the product.
+        name:
+          example: "GLP1"
+          type: string
+          description: Name of the product.
+        startDate:
+          example: "2025-07-01T07:00:00.000Z"
+          type: string
+          format: date-time
+          description: Start date that the product becomes available.
+        description:
+          example: "A product to help with weight loss"
+          type: string
+          description: A description of what the product is.
+    CreateProduct:
+      description: Represents a payload for creating a new product
+      type: object
+      additionalProperties: false
+      required:
+        - name
+        - startDate
+        - description
+      properties:
+        name:
+          example: "GLP1"
+          type: string
+          description: Name of the product.
+        startDate:
+          example: "2025-07-01T07:00:00.000Z"
+          type: string
+          format: date-time
+          description: Start date that the product becomes available.
+        description:
+          example: "A product to help with weight loss"
+          type: string
+          description: A description of what the product is.

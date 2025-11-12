@@ -1,0 +1,13 @@
+{
+  "name": "@contract-first/infrastructure",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@contract-first/api": "*",
+    "aws-cdk-lib": "2.189.0",
+    "dotenv": "^16.5.0",
+    "constructs": "^10.0.0",
+    "tslib": "^2.3.0"
+  }
+}

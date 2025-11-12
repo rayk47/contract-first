@@ -1,0 +1,21 @@
+{
+  "name": "@contract-first/backend",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/backend/src",
+  "projectType": "library",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project @contract-first/backend --web",
+  "targets": {
+    "build": {
+      "dependsOn": [
+        {
+          "target": "build",
+          "projects": "dependencies"
+        }
+      ]
+    }
+  },
+  "implicitDependencies": [
+    "api"
+  ]
+}

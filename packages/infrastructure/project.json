@@ -1,0 +1,75 @@
+{
+  "name": "@contract-first/infrastructure",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/infrastructure/bin",
+  "projectType": "library",
+  "targets": {
+    "bootstrap": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "packages/infrastructure",
+        "outputPath": "dist/packages/infrastructure",
+        "commands": [
+          {
+            "command": "npx aws-cdk bootstrap",
+            "forwardAllArgs": true
+          }
+        ]
+      }
+    },
+    "deploy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "packages/infrastructure",
+        "commands": [
+          {
+            "command": "npx aws-cdk deploy --all --require-approval never --force --verbose",
+            "forwardAllArgs": true
+          },
+          {
+            "command": "API_ID=$(aws apigateway get-rest-apis --region us-east-1 --query \"items[?name=='APIGatewayDevContractFirst'].id\" --output text) && aws apigateway create-deployment --rest-api-id $API_ID --stage-name prod --region us-east-1"
+          }
+        ],
+        "parallel": false
+      },
+      "dependsOn": [
+        {
+          "target": "build",
+          "dependencies": true
+        }
+      ]
+    },
+    "destroy": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "packages/infrastructure",
+        "outputPath": "dist/packages/infrastructure",
+        "commands": [
+          {
+            "command": "npx aws-cdk destroy --all --require-approval never --force",
+            "forwardAllArgs": true
+          }
+        ]
+      }
+    },
+    "build": {
+      "executor": "@nx/js:tsc",
+      "options": {
+        "outputPath": "./packages/infrastructure/dist",
+        "main": "bin/infrastructure.ts",
+        "tsConfig": "./packages/infrastructure/tsconfig.json"
+      },
+      "dependsOn": [
+        {
+          "target": "build",
+          "projects": "dependencies"
+        }
+      ]
+    }
+  },
+  "tags": [],
+  "implicitDependencies": [
+    "web",
+    "api"
+  ]
+}

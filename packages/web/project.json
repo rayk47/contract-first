@@ -1,0 +1,21 @@
+{
+  "name": "@contract-first/web",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/web/src",
+  "projectType": "application",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project @contract-first/web --web",
+  "targets": {
+    "build": {
+      "dependsOn": [
+        {
+          "target": "build",
+          "projects": "dependencies"
+        }
+      ]
+    }
+  },
+  "implicitDependencies": [
+    "api"
+  ]
+}
