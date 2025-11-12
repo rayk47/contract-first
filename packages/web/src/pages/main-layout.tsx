@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
-import { Layout, Typography } from 'antd';
+import { Button, Flex, Layout, Typography } from 'antd';
 import { useScreens } from '../hooks/useScreens';
+import { useNavigate } from 'react-router-dom';
 
 const { Content, Header, Footer } = Layout;
 
@@ -12,6 +13,7 @@ export function MainLayout(props: MainLayoutProps) {
     const screens = useScreens();
     const maxWidth = screens.xxl ? 1200 : screens.xl ? 1000 : '95%';
     const borderRadius = screens.xs ? 12 : 8;
+    const navigate = useNavigate();
 
     return (
         <Layout style={{
@@ -27,7 +29,30 @@ export function MainLayout(props: MainLayoutProps) {
                 padding: '10px',
                 borderRadius
             }} >
-                <Typography.Title style={{ margin: 5, color: 'white' }} level={4}>CONTRACT FIRST DEVELOPMENT</Typography.Title>
+                <div
+                    style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'space-between',
+                    }}
+                >
+                    <Flex
+                        align="end"
+                        onClick={() => navigate('/')}
+                    >
+                        <Typography.Title style={{ margin: 5, color: 'white' }} level={4}>CONTRACT FIRST DEVELOPMENT</Typography.Title> </Flex>
+                    <Flex align="center" gap={screens.xs ? 8 : 16}>
+                        <Button
+                            type="primary"
+                            ghost
+                            size={screens.xs ? 'small' : 'middle'}
+                            onClick={() => navigate('api-docs')}
+                            style={{ color: 'white' }}
+                        >
+                            API Docs
+                        </Button>
+                    </Flex>
+                </div>
             </Header>
             <Content style={{
                 background: 'white',

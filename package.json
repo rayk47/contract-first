@@ -33,12 +33,14 @@
     "@types/node": "^20.0.0",
     "@types/react": "19.0.0",
     "@types/react-dom": "19.0.0",
+    "@types/swagger-ui-react": "^5.18.0",
     "@types/uuid": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^7.16.0",
     "@typescript-eslint/parser": "^7.16.0",
     "@vitejs/plugin-react": "^4.2.0",
     "@vitest/ui": "^3.0.0",
     "babel-jest": "^29.7.0",
+    "cpx": "^1.5.0",
     "dotenv": "^16.5.0",
     "eslint": "~8.57.0",
     "eslint-config-prettier": "^10.0.0",
@@ -77,6 +79,7 @@
     "dynamoose": "^4.0.4",
     "react": "19.0.0",
     "react-dom": "19.0.0",
-    "react-router-dom": "6.29.0"
+    "react-router-dom": "6.29.0",
+    "swagger-ui-react": "^5.30.2"
   }
 }

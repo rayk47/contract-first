@@ -37,6 +37,11 @@ export default defineConfig(() => ({
         manualChunks: {
           react: ['react', 'react-dom'],
           antd: ['antd'],
+          'swagger-ui': [
+            'swagger-ui-react',
+            'swagger-ui-react/swagger-ui.css'
+          ],
+          'ant-icons': ['@ant-design/icons']
         },
       },
     },

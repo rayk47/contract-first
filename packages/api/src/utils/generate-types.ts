@@ -13,7 +13,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const generateTypesFromOpenAPIYaml = async () => {
-    const yamlFile = join(__dirname, '../lib/contract-first.yaml');
+    const yamlFile = join(__dirname, '../lib/openapi.yaml');
     await validateYamlSchema(yamlFile);
     await buildApiTypes(yamlFile);
     await buildJsonSchemaTypes(yamlFile);

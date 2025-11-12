@@ -3,6 +3,8 @@ info:
   title: Contract First API
   description: API for demoing contract first development
   version: 1.0.0
+servers:
+  - url: /api
 paths:
   "/products":
     get:

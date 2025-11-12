@@ -37,6 +37,28 @@ export class ApiGatewayStack extends Stack {
     }
 
     addHandlingOfAccessDenied = () => {
+        const response400 = this.rootApi.addGatewayResponse(buildResourceIdentifier('400GatewayResponse'), {
+            type: ResponseType.BAD_REQUEST_BODY,
+            statusCode: '400',
+            responseHeaders: {
+                'Access-Control-Allow-Origin': "'*'"
+            },
+            templates: {
+                'application/json': JSON.stringify({
+                    error: {
+                        detail: '$context.error.validationErrorString',
+                        title: 'Invalid Request',
+                        statusCode: 400,
+                        type: 'API-Gateway',
+                        timestamp: '$context.requestTime',
+                        requestId: '$context.requestId',
+                        instance: '$context.httpMethod $context.path'
+                    }
+                })
+            }
+        });
+        response400.applyRemovalPolicy(RemovalPolicy.DESTROY);
+
         const response401 = this.rootApi.addGatewayResponse(buildResourceIdentifier('401GatewayResponse'), {
             type: ResponseType.UNAUTHORIZED,
             statusCode: '401',
