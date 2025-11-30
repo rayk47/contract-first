@@ -19,9 +19,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: "#/components/schemas/Product"
+                $ref: "#/components/schemas/Products"
     post:
       tags:
         - Products
@@ -87,6 +85,10 @@ components:
           example: "A product to help with weight loss"
           type: string
           description: A description of what the product is.
+    Products:
+      type: array
+      items:
+        $ref: "#/components/schemas/Product"
     CreateProduct:
       description: Represents a payload for creating a new product
       type: object

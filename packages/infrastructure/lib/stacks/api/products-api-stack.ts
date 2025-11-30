@@ -6,7 +6,7 @@ import { buildResourceIdentifier } from '../../utils/utils.js';
 import { Runtime } from 'aws-cdk-lib/aws-lambda';
 import { ConfigProps } from '../../env/env-config.js';
 import { ApiGatewayStack } from '../base/api-gateway.stack.js';
-import { ProductSchema, CreateProductSchema } from '@contract-first/api';
+import { ProductSchema, CreateProductSchema, ProductsSchema } from '@contract-first/api/schema';
 import { BACKEND_LIB, PACKAGE_LOCK_FILE, PROJECT_ROOT } from 'lib/utils/paths.js';
 import { join } from 'path';
 import { Table } from 'aws-cdk-lib/aws-dynamodb';
@@ -21,6 +21,7 @@ export class ProductsApiStack extends Stack {
     productsByIdResource: Resource;
     apiGateway: IRestApi;
     productSchemaModel: Model;
+    productsListSchemaModel: Model;
     requestValidator: RequestValidator;
     dynamoTable: Table;
 
@@ -50,6 +51,14 @@ export class ProductsApiStack extends Stack {
             schema: ProductSchema
         });
         this.productSchemaModel.applyRemovalPolicy(RemovalPolicy.DESTROY);
+
+        this.productsListSchemaModel = new Model(this, buildResourceIdentifier('ProductsListModel'), {
+            restApi: this.apiGateway,
+            contentType: 'application/json',
+            modelName: 'productsListSchemaModel',
+            schema: ProductsSchema
+        });
+        this.productsListSchemaModel.applyRemovalPolicy(RemovalPolicy.DESTROY);
 
         this.requestValidator = new RequestValidator(this, buildResourceIdentifier('ProductsRequestValidator'), {
             restApi: this.apiGateway,
@@ -125,11 +134,12 @@ export class ProductsApiStack extends Stack {
 
         const getProductsMethod = this.productsResource.addMethod('GET', getProductsLambdaIntegration, {
             authorizationType: AuthorizationType.NONE,
+            requestValidator: this.requestValidator,
             methodResponses: [
                 {
                     statusCode: '200',
                     responseModels: {
-                        'application/json': this.productSchemaModel,
+                        'application/json': this.productsListSchemaModel,
                     },
                 },
             ],
