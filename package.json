@@ -8,7 +8,7 @@
     "lint-fix": "nx run-many --target=lint --all --fix",
     "deploy": "npm run build && nx run-many --target=deploy --all --verbose",
     "destroy": "npm run build && nx run-many --target=destroy --all",
-    "serve": "export $(grep -v '^#' .env | xargs) && nx run-many --target=serve --all"
+    "serve": "npm run build && export $(grep -v '^#' .env | xargs) && nx run-many --target=serve --all"
   },
   "private": true,
   "devDependencies": {

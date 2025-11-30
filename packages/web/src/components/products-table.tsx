@@ -11,6 +11,7 @@ export const ProductsTable = () => {
     const [isLoadingProducts, setIsLoadingProducts] = useState(false);
     const [products, setProducts] = useState<Product[]>([]);
     const [isCreateNewProductDrawerOpen, setIsCreateNewProductDrawerOpen] = useState(false);
+    const [isDeletingProduct, setIsDeletingProduct] = useState(false);
 
     useEffect(() => {
         const effect = async () => {
@@ -35,9 +36,8 @@ export const ProductsTable = () => {
         },
         {
             title: 'Start Date',
-            dataIndex: 'startDate',
             key: 'startDate',
-            render: (date: string) => date.split('T')[0]
+            render: (_, record) => record.startDate.split('T')[0]
         },
         {
             title: 'Description',
@@ -53,11 +53,18 @@ export const ProductsTable = () => {
     ];
 
     const onDeleteProduct = async (recordId: string) => {
-        await deleteProduct(recordId);
+        try {
+            setIsDeletingProduct(true);
+            await deleteProduct(recordId);
 
-        setProducts(current => {
-            return current.filter(p => p.id !== recordId)
-        })
+            setProducts(current => {
+                return current.filter(p => p.id !== recordId)
+            })
+        } catch (error) {
+            console.error(error);
+        } finally {
+            setIsDeletingProduct(false)
+        }
     }
 
     const onAddProduct = (newProduct: Product) => {
@@ -68,7 +75,7 @@ export const ProductsTable = () => {
 
     return (
         <><Table
-            loading={isLoadingProducts}
+            loading={isLoadingProducts || isDeletingProduct}
             pagination={false}
             rowKey={'id'}
             locale={{

@@ -33,7 +33,7 @@ const buildApiTypes = async (yamlFile: string) => {
         fileName: 'contract-first-api-types.ts',
         output: (join(__dirname, '../lib/')),
         input: yamlFile,
-        generateClient: false,
+        generateClient: true,
         generateRouteTypes: true,
         toJS: false,
         silent: true

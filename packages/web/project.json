@@ -18,6 +18,7 @@
           "target": "build",
           "projects": "dependencies"
         },
+        "typecheck",
         "copy-openapi-yaml"
       ]
     }

@@ -1,17 +1,17 @@
-import { performGet, performPost, performDelete } from "../utils/fetch-utils.js"
-import { CreateProduct, Product } from "./contract-first-api-types.js";
+import { Api, CreateProduct, Product } from "./contract-first-api-types.js";
+
+const api = new Api({ baseUrl: '/api' });
 
 export const getProducts = async () => {
-    const response = await performGet<Product[]>(`/api/products`);
-    return response;
+    const res = await api.products.getProducts();
+    return res.data;
 }
 
-export const createProduct = async (body: CreateProduct) => {
-    const response = await performPost<Product, CreateProduct>(`/api/products`, body);
-    return response;
-}
+export const createProduct = async (payload: CreateProduct): Promise<Product> => {
+    const res = await api.products.postProduct(payload);
+    return res.data;
+};
 
 export const deleteProduct = async (productId: string) => {
-    const response = await performDelete(`/api/products/${productId}`);
-    return response;
+    await api.products.deleteProduct(productId);
 }
